@@ -23,4 +23,4 @@ for claim in inp:
 
     if arr[row:row + side1, col:col + side2].sum() == side1 * side2:
         print(id)
-        exit()
+        break
