@@ -16,7 +16,7 @@ print(len(stack))
 # part 2
 min_char = None
 min_len = float('inf')
-for n_char in set(polymer):
+for n_char in set(polymer.lower()):
     stack = []
     new_poly = [x for x in polymer if x.lower() != n_char.lower()]
     for char in new_poly:
