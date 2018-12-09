@@ -44,7 +44,6 @@ if __name__ == '__main__':
         players = int(inp.split(' ')[0])
         points = int(inp.split(' ')[-2])
         points *= 100
-        # inp = [l.strip() for l in f.readlines()]
     scores = [0] * players
     lis = CircularDoublyLinkedList()
     for i in range(1, points + 1):
