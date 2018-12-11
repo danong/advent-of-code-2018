@@ -44,9 +44,12 @@ if __name__ == '__main__':
         players = int(inp.split(' ')[0])
         points = int(inp.split(' ')[-2])
         points *= 100
+    import time
+    start = time.time()
     scores = [0] * players
     lis = CircularDoublyLinkedList()
     for i in range(1, points + 1):
         score = lis.insert(i)
         scores[i % players] += score
+    print(time.time() - start)
     print(max(scores))
