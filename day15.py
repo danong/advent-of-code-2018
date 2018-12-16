@@ -58,21 +58,23 @@ class Agent:
         prev = {self.location: None}
 
         for idx in movable(self.location, board):
-            queue.append(idx)
+            queue.append((idx, 1))
             prev[idx] = self.location
-        should_move = False
+        moves = float('inf')
         cur_idx = None
+        potential_moves = []
         while queue:
-            cur_idx = queue.popleft()
+            cur_idx, num_moves = queue.popleft()
             if can_attack(cur_idx, board, self.enemy, enemies):
-                should_move = True
-                break
+                moves = num_moves
+                potential_moves.append(cur_idx)
+                continue
             for n_idx in movable(cur_idx, board):
                 if n_idx not in prev:
                     prev[n_idx] = cur_idx
                     queue.append(n_idx)
 
-        if should_move:
+        if moves:
             # backtrack
             while prev[cur_idx]:
                 new_location, cur_idx = cur_idx, prev[cur_idx]
@@ -115,10 +117,10 @@ class Game:
             print(''.join(row))
 
     def play(self) -> None:
-        self.display()
         while not self.won:
-            self.turn()
             self.display()
+            # print(self.agents.values())
+            self.turn()
             self.turns += 1
         print((self.turns - 1) * max(self.scores))
 
@@ -134,6 +136,7 @@ class Game:
                 if target.hp <= 0:
                     self.board[target.location] = self.free
                     self.agents[agent.enemy].remove(target)
+                    # sorted_agents.remove(target)
                     del target
 
     @property
